@@ -266,6 +266,17 @@ function ProductList({ onHomeClick }) {
         }));
       };
 
+    useEffect(() => {
+        const updatedAddedToCart = { ...addedToCart};
+        Object.keys(addedToCart).forEach((productName) => {
+            const stillInCart = cart.some(item => item.name === productName);
+            if (!stillInCart){
+                delete updatedAddedToCart[productName];
+            }
+        });
+        setAddedToCart(updatedAddedToCart);
+      }, [cart]);
+
       const calculateTotalQuantity = () => {
         return cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0;
   };
